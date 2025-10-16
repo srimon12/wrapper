@@ -1,0 +1,2798 @@
+Directory structure:
+└── wrapper/
+    ├── README.md
+    ├── LICENSE
+    ├── pyproject.toml
+    ├── examples/
+    │   ├── anthropic_ex.py
+    │   ├── azure_ex.py
+    │   ├── bedrock_ex.py
+    │   ├── gemini_ex.py
+    │   ├── groq_ex.py
+    │   ├── list_models.py
+    │   ├── ollama_ex.py
+    │   ├── openai.py
+    │   └── openrouter_ex.py
+    └── wrapper/
+        ├── __init__.py
+        ├── base.py
+        ├── config.py
+        ├── core.py
+        ├── utils.py
+        ├── examples/
+        │   └── builder.py
+        ├── memory/
+        │   ├── json_store.py
+        │   └── store.py
+        ├── prompt/
+        │   └── formatter.py
+        └── providers/
+            ├── anthropic_provider.py
+            ├── azure_provider.py
+            ├── bedrock_provider.py
+            ├── gemini_provider.py
+            ├── groq_provider.py
+            ├── ollama_provider.py
+            ├── openai_provider.py
+            └── openrouter_provider.py
+
+================================================
+FILE: README.md
+================================================
+![image_alt](https://github.com/anubhavgirdhar1/wrapper/blob/8cd8cd4735cdf63030b513aeb5dd173cb866a56a/wrapper/src/banner.png)
+
+[![GitHub stars](https://img.shields.io/github/stars/anubhavgirdhar1/wrapper?style=social)](https://github.com/anubhavgirdhar1/wrapper/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/anubhavgirdhar1/wrapper?style=social)](https://github.com/anubhavgirdhar1/wrapper/network)
+[![PyPI version](https://img.shields.io/pypi/v/wrapper)](https://pypi.org/project/wrapper/)
+[![License](https://img.shields.io/github/license/anubhavgirdhar1/wrapper)](LICENSE)
+
+---
+
+## Overview
+
+**Wrapper** is a unified Python library designed to interact with multiple Large Language Model (LLM) providers through a **single consistent interface**. Cuz every provider thought 'lets make our own fkin API format so devs can suffer'    
+
+---
+
+## Installation
+
+```bash
+# Install via pip
+pip install wrapper
+```
+
+or if you dont trust PyPI (fair), clone this repo and slap it into your env:
+
+```bash
+git clone https://github.com/anubhavgirdhar1/wrapper.git
+cd wrapper
+pip install -e .
+```
+
+---
+## .env setup (don’t be that guy who pastes keys into code)
+
+Make a .env file. Throw your keys in it. Done.
+
+```bash
+OPENAI_API_KEY=sk-fuckingspam
+OLLAMA_BASE_URL=http://localhost:11434
+GROQ_API_KEY=groq-faster-than-your-ex
+AWS_ACCESS_KEY_ID=xxxx
+AWS_SECRET_ACCESS_KEY=xxxx
+AWS_REGION=us-east-1
+ANTHROPIC_API_KEY=claude-knows-too-much
+```
+
+you can ignore this too, wrapper will ask you for it, don't be a dih, none is free.
+
+---
+
+## ⚡ Quick Start
+
+```python
+from wrapper import Wrapper
+
+# Initialize provider
+OpenAI_Client = Wrapper("openai")
+Ollama_Client = Wrapper("ollama")
+
+# Generate text
+response = OpenAI_Client.generate(
+    model="gpt-4",
+    user="say 'dih' if you are alive",
+)
+print(response)
+
+# Using Ollama with default system prompt
+response2 = Ollama_Client.generate(
+    model="gemma3n",
+    user="say 'puh' if you are alive"
+)
+print(response2)
+```
+
+---
+
+## 🦜 Features
+
+* **One API Model**: all providers are called using single format, stop fooling around the docs.
+* **Streaming Support**: Stream responses when available.
+* **Custom Prompts**: Custom param support for crazy shi you might wanna pull
+* **Environment Management**: Automatically handle API keys via `.env`.
+* **Debug Logging**: Toggle debug output via `SHOW_LOGS` in `config.py`. (This a custom logger, try ts out)
+
+---
+
+## 🛠 Supported Providers
+
+| Provider | Why??                                              |
+| -------- | -------------------------------------------------- | 
+| OpenAI   | the boring dfault shi                              |                                               
+| Ollama   | local models so you can LARP on self-sovereign     | 
+| Groq     | fast as fuck                                       | 
+| Bedrock  | Amazon's way of charging you more than S3          | 
+| Anthropic| claude, polite sybau ah model.                     | 
+| Azure    | openai but enterprise daddy issues edition         | 
+
+---
+
+## 💪 Contribution
+please learn and use conventional commits 
+
+Fork → Branch → PR.
+or just maybe open an issue and scream ts out of it
+
+---
+
+## 📜 License
+
+MIT. Do whatever. If it breaks, you get to keep both pieces. See [LICENSE](LICENSE) for details.
+
+---
+
+## 🌐 Links
+
+* **PyPI**: [https://pypi.org/project/wrapper/](https://pypi.org/project/wrapper/)
+
+---
+
+## 👤 Connect with the Author
+
+* **LinkedIn**: [Anubhav Girdhar](https://www.linkedin.com/in/anubhav-girdhar-b82a27225/)
+
+---
+
+
+
+================================================
+FILE: LICENSE
+================================================
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+
+
+================================================
+FILE: pyproject.toml
+================================================
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wrapper"
+version = "0.1.19.5"
+description = "A unified Python wrapper for calling LLMs locally or via 3rd party providers"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+
+authors = [
+  { name = "Anubhav Girdhar", email = "anubhavgirdhar18@gmail.com" }
+]
+
+dependencies = [
+  "openai",
+  "python-dotenv",
+  "requests",
+  "anthropic",
+  "boto3",
+  "botocore",
+  "groq",
+  "google-genai"
+]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries"
+]
+
+[project.urls]
+Homepage = "https://github.com/anubhavgirdhar1/wrapper"
+Repository = "https://github.com/anubhavgirdhar1/wrapper"
+Issues = "https://github.com/anubhavgirdhar1/wrapper/issues"
+LinkedIn = "https://in.linkedin.com/in/anubhav-girdhar-b82a27225"
+
+
+
+================================================
+FILE: examples/anthropic_ex.py
+================================================
+from wrapper.core import Wrapper
+
+# Initialize Anthropic client
+anthropic_client = Wrapper("anthropic")
+
+# Generate text
+response = anthropic_client.generate(
+    model="claude-sonnet-4-0",
+    user="Hello, how are you?",
+    system="You are a helpful assistant."
+)
+
+
+================================================
+FILE: examples/azure_ex.py
+================================================
+from wrapper.core import Wrapper
+
+# Initialize Azure client
+azure_client = Wrapper("azure")
+
+# Generate text
+response = azure_client.generate(
+    model="gpt-4",
+    user="Hello, how are you?",
+    system="You are a helpful assistant."
+)
+
+
+================================================
+FILE: examples/bedrock_ex.py
+================================================
+from wrapper.core import Wrapper
+
+bedrock_client = Wrapper('bedrock')
+
+response = bedrock_client.generate(
+    model="us.anthropic.claude-3-5-sonnet-20240620-v1:0",
+    prompt="Hello, how are you?"
+)
+
+
+================================================
+FILE: examples/gemini_ex.py
+================================================
+from wrapper.core import Wrapper
+# Initialize Gemini client
+gemini_client = Wrapper("gemini")
+
+response = gemini_client.generate(
+    model="models/gemini-2.0-flash",
+    user="Write a tiny poem about summer rain.",
+    system="You are a helpful assistant.",
+)
+print(response)
+
+# Streaming example
+stream_response = gemini_client.generate(
+    model="models/gemini-2.0-flash",
+    user="Write a tiny poem about summer rain.",
+    system="You are a helpful assistant.",
+    stream=True
+)
+for chunk in stream_response:
+    print(chunk, end='', flush=True)
+
+
+================================================
+FILE: examples/groq_ex.py
+================================================
+from wrapper.core import Wrapper
+
+groq_client = Wrapper("groq")
+
+response = groq_client.generate(
+    model="llama-3.3-70b-versatile"
+)
+
+
+================================================
+FILE: examples/list_models.py
+================================================
+from wrapper.core import Wrapper
+
+def print_models_for_provider(provider_name: str):
+    """
+    Initializes a provider via the Wrapper and prints its available models.
+    """
+    print("-" * 50)
+    print(f"Fetching models for provider: {provider_name.upper()}")
+    print("-" * 50)
+    
+    try:
+        models = Wrapper.available_models_api(provider_name)
+        
+        if not models:
+            print(f"No models returned for {provider_name}. This could be an API key issue or network problem.")
+        else:
+            print(f"\nSuccessfully listed {len(models)} models for {provider_name}.")
+            
+    except Exception as e:
+        print(f"\nAn unexpected error occurred while fetching models for {provider_name}:")
+        print(e)
+    
+    print("\n")
+
+if __name__ == "__main__":
+    # Ensure your OPENROUTER_API_KEY or GEMINI_API_KEY or other API keys are in your .env file
+    # print_models_for_provider("openrouter")
+    # print_models_for_provider("gemini")
+    print_models_for_provider("groq")
+
+
+================================================
+FILE: examples/ollama_ex.py
+================================================
+from wrapper.core import Wrapper
+
+Ollama_Client = Wrapper("ollama")
+# OpenAI_Client = Wrapper("openai")
+groq_client = Wrapper("groq")
+
+groq_model = "llama-3.3-70b-versatile"
+model = "gemma3n"
+user="Just say Yes if you work, nothing else"
+system="respond in 2 tokens"
+stream = False
+
+# call_type = 'Async' #TODO
+
+# for User, System style calls
+# print(Ollama_Client.generate(model=model, user=user, system=system , stream=stream))
+
+print(groq_client.generate(model=groq_model, prompt=user, stream=stream))
+# for plain call with prompt
+# print(Ollama_Client.generate(model=model, prompt=user, stream=stream))
+
+# OpenAI_Client.generate(model=model, prompt=prompt, stream=stream)
+
+
+================================================
+FILE: examples/openai.py
+================================================
+from wrapper.core import Wrapper
+
+openai_client = Wrapper("openai")
+
+response = openai_client.generate(
+    model="gpt-5",
+    prompt="say yes if you are active",
+    stream=True)
+
+
+================================================
+FILE: examples/openrouter_ex.py
+================================================
+from wrapper.core import Wrapper
+#Initialize OpenRouter client
+openrouter_client = Wrapper("openrouter")
+
+response = openrouter_client.generate(
+    model="openai/gpt-4o",
+    user="Write a tiny poem about summer rain.",
+    system="You are a helpful assistant.",
+)
+print(response)
+
+#Streaming example
+stream_response = openrouter_client.generate(
+    model="openai/gpt-4o",
+    user="Write a tiny poem about summer rain.",
+    system="You are a helpful assistant.",
+    stream=True
+)
+for chunk in stream_response:
+    print(chunk, end='', flush=True)
+
+
+================================================
+FILE: wrapper/__init__.py
+================================================
+__version__ = "0.1.16"
+
+from .core import Wrapper
+from .utils import *
+from .providers import *
+
+
+================================================
+FILE: wrapper/base.py
+================================================
+from abc import ABC, abstractmethod
+
+class BaseLLM(ABC):
+    @abstractmethod
+    def generate(self, prompt: str, **kwargs) -> str:
+        pass
+
+
+================================================
+FILE: wrapper/config.py
+================================================
+SHOW_LOGS = True
+
+
+================================================
+FILE: wrapper/core.py
+================================================
+# wrapper/core.py
+from wrapper.providers.anthropic_provider import AnthropicProvider
+from wrapper.providers.azure_provider import AzureProvider
+from wrapper.providers.openai_provider import OpenAIProvider
+from wrapper.providers.ollama_provider import OllamaProvider
+from wrapper.providers.groq_provider import GroqProvider
+from wrapper.providers.bedrock_provider import BedrockProvider
+from wrapper.providers.openrouter_provider import OpenRouterProvider
+from wrapper.providers.gemini_provider import GeminiProvider
+from collections import defaultdict
+from wrapper.utils import ColorLogger
+from wrapper.config import *
+from typing import Tuple
+
+# === thin memory / prompting imports ===
+from typing import Optional, Dict, Any, List, Union, Tuple
+from wrapper.memory.store import MemoryStore
+from wrapper.prompt.formatter import build_riceco_xml
+from wrapper.examples.builder import build_example_from_segments, suggest_tags_local
+
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class Wrapper:
+    def __init__(self, provider: str, memory_store: Optional[MemoryStore] = None, **kwargs):
+        provider = provider.lower()
+        self.memory_store = memory_store
+
+        # cache last turn to allow frictionless example-saving
+        self._last_user_text: Optional[str] = None
+        self._last_output_text: Optional[str] = None
+        self._last_user_id: Optional[str] = None
+        self._last_conversation_id: str = "default"
+
+        if provider == "anthropic":
+            self.impl = AnthropicProvider(**kwargs)
+        elif provider == "azure":
+            self.impl = AzureProvider(**kwargs)
+        elif provider == "openai":
+            self.impl = OpenAIProvider(**kwargs)
+        elif provider == "ollama":
+            self.impl = OllamaProvider(**kwargs)
+        elif provider == "groq":
+            self.impl = GroqProvider(**kwargs)
+        elif provider == "bedrock":
+            self.impl = BedrockProvider(**kwargs)
+        elif provider == "openrouter":
+            self.impl = OpenRouterProvider(**kwargs)
+        elif provider == "gemini":
+            self.impl = GeminiProvider(**kwargs)
+        else:
+            raise ValueError(f"Provider {provider} not supported yet")
+
+    def generate(
+        self,
+        model: str,
+        prompt: str = None,
+        user: str = None,
+        system: str = None,
+        messages: list[dict] = None,
+        temperature: float = None,
+        max_tokens: float = None,
+        top_p: float = None,
+        frequency_penalty: float = None,
+        presence_penalty: float = None,
+        stream: bool = False,
+        **kwargs
+    ) -> str:
+
+        # ---------- thin memory / prompting config ----------
+        mem_cfg: Dict[str, Any] = kwargs.pop("memory", None) or {}
+        prompting: Dict[str, Any] = kwargs.pop("prompting", None) or {}
+
+        use_memory = bool(mem_cfg.get("enabled"))
+        mode = (mem_cfg.get("mode") or "normal").lower()
+        user_id = mem_cfg.get("user_id")
+        conversation_id = mem_cfg.get("conversation_id") or "default"
+        k = int(mem_cfg.get("k") or 6)
+        autosummarize_n = int(mem_cfg.get("autosummarize_n") or 5)
+        profile_name = mem_cfg.get("profile_name") or prompting.get("profile_name")
+        profile_updates = mem_cfg.get("profile_updates") or {}
+
+        example_tags = prompting.get("example_tags") or mem_cfg.get("example_tags") or []
+        if isinstance(example_tags, str):
+            example_tags = [t.strip() for t in example_tags.split(",") if t.strip()]
+
+        history_window: List[dict] = []
+        profile: Dict[str, Any] = {}
+        examples: List[Dict[str, Any]] = []
+        thread_summary: str = ""
+
+        # ---------- pull memory (if enabled) ----------
+        if use_memory and self.memory_store and user_id:
+            self._last_user_id = user_id
+            self._last_conversation_id = conversation_id
+
+            if profile_updates:
+                try:
+                    self.memory_store.upsert_profile(user_id, profile_updates)
+                except Exception as e:
+                    log.warning(f"[memory] profile upsert failed: {e}")
+
+            try:
+                history_window = self.memory_store.get_window(user_id, conversation_id, k=k) or []
+            except Exception as e:
+                log.warning(f"[memory] get_window failed: {e}")
+
+            try:
+                thread_summary = self.memory_store.get_thread_summary(user_id, conversation_id) or ""
+            except Exception as e:
+                log.warning(f"[memory] get_thread_summary failed: {e}")
+
+            if mode == "advanced":
+                try:
+                    if profile_name:
+                        profile = self.memory_store.get_profile_named(user_id, profile_name) or {}
+                    else:
+                        profile = self.memory_store.get_profile(user_id) or {}
+                except Exception as e:
+                    log.warning(f"[memory] get_profile failed: {e}")
+
+            if profile_name:
+                try:
+                    examples = self.memory_store.get_examples_for_profile(user_id, profile_name, limit=2) or []
+                    # merge profile's example tags with caller tags
+                    p_tags = profile.get("example_tags") or []
+                    example_tags = list(dict.fromkeys(list(example_tags) + list(p_tags)))
+                except Exception as e:
+                    log.warning(f"[memory] get_examples_for_profile failed: {e}")
+
+            if example_tags and not examples:
+                try:
+                    examples = self.memory_store.get_examples_by_tags(user_id, example_tags, limit=2) or []
+                except Exception as e:
+                    log.warning(f"[memory] get_examples_by_tags failed: {e}")
+
+        # ---------- prepare messages (backward-compatible) ----------
+        if messages is None:
+            messages = []
+
+            # system message
+            if system:
+                messages.append({"role": "system", "content": system})
+            elif hasattr(self.impl, "default_system_prompt"):
+                messages.append({"role": "system", "content": self.impl.default_system_prompt})
+
+            # user message
+            if user:
+                messages.append({"role": "user", "content": user})
+            elif prompt:
+                messages.append({"role": "user", "content": prompt})
+
+        # ---------- assemble XML (from profile defaults + prompting) ----------
+        if prompting or profile_name or profile:
+            # profile defaults -> overridden by explicit prompting params
+            defaults: Dict[str, Any] = {}
+            for key in ("role", "instruction", "constraints", "output_format", "context"):
+                if key in profile and profile.get(key) not in (None, "", []):
+                    defaults[key] = profile.get(key)
+            merged = {**defaults, **prompting}
+
+            # CONTEXT: stored summary + compact rolling window (~800 chars)
+            ctx_parts: List[str] = []
+            if thread_summary:
+                ctx_parts.append(f"Summary: {thread_summary}")
+            used = 0
+            budget = 800
+            for m in history_window[-k:]:
+                if m.get("role") not in ("user", "assistant"):
+                    continue
+                seg = f'{m["role"]}: {str(m.get("content") or "").strip()}'
+                if not seg:
+                    continue
+                if used + len(seg) > budget:
+                    break
+                ctx_parts.append(seg)
+                used += len(seg)
+            context_text = " | ".join(ctx_parts).strip()
+
+            # current user text
+            current_user_text = user or prompt
+            if not current_user_text:
+                for m in reversed(messages):
+                    if m.get("role") == "user":
+                        current_user_text = m.get("content")
+                        break
+
+            xml = build_riceco_xml(
+                role=merged.get("role"),
+                instruction=merged.get("instruction"),
+                context=merged.get("context") or context_text,
+                constraints=merged.get("constraints"),
+                output_format=merged.get("output_format"),
+                user_text=current_user_text,
+                profile=profile if mode == "advanced" else None,
+                examples=examples if examples else None,
+                example_ref_tags=example_tags or None,
+            )
+
+            if messages and messages[0].get("role") == "system":
+                messages[0]["content"] = xml
+            else:
+                messages.insert(0, {"role": "system", "content": xml})
+
+        # ---------- provider call ----------
+        params = {"model": model, "stream": stream, "messages": messages}
+        if temperature is not None:
+            params["temperature"] = temperature
+        if max_tokens is not None:
+            params["max_tokens"] = max_tokens
+        if top_p is not None:
+            params["top_p"] = top_p
+        if frequency_penalty is not None:
+            params["frequency_penalty"] = frequency_penalty
+        if presence_penalty is not None:
+            params["presence_penalty"] = presence_penalty
+        params.update(kwargs)
+
+        output = self.impl.generate(**params)
+
+        # cache last turn for frictionless example saving
+        self._last_user_text = user or prompt or None
+        if not self._last_user_text:
+            for m in reversed(messages):
+                if m.get("role") == "user":
+                    self._last_user_text = m.get("content")
+                    break
+        self._last_output_text = output if isinstance(output, str) else None
+
+        # ---------- append + auto-summarize ----------
+        if use_memory and self.memory_store and user_id:
+            try:
+                # append last user + assistant
+                last_user = None
+                for m in reversed(messages):
+                    if m.get("role") == "user":
+                        last_user = m.get("content")
+                        break
+                if last_user:
+                    self.memory_store.append_message(user_id, conversation_id, "user", last_user)
+                if isinstance(output, str) and output:
+                    self.memory_store.append_message(user_id, conversation_id, "assistant", output)
+
+                # autosummarize when the thread grows
+                try:
+                    length = self.memory_store.get_thread_length(user_id, conversation_id)
+                    if autosummarize_n and length >= autosummarize_n:
+                        window = self.memory_store.get_window(user_id, conversation_id, k=10)
+                        roll: List[str] = []
+                        used = 0
+                        budget = 600
+                        for m in window:
+                            if m.get("role") not in ("user", "assistant"):
+                                continue
+                            seg = f'{m["role"][0].upper()}: {str(m.get("content") or "").strip()}'
+                            if not seg:
+                                continue
+                            if used + len(seg) > budget:
+                                break
+                            roll.append(seg)
+                            used += len(seg)
+                        summary = " | ".join(roll)
+                        self.memory_store.set_thread_summary(user_id, conversation_id, summary)
+                except Exception as e:
+                    log.warning(f"[memory] autosummarize failed: {e}")
+
+            except Exception as e:
+                log.warning(f"[memory] append failed: {e}")
+
+        return output
+    def _suggest_tags_llm(self, model: str, chunks: List[str], k: int = 5) -> List[str]:
+        """Ask the model for up to k comma-separated tags. Fallback happens in caller."""
+        try:
+            prompt = (
+                "Suggest concise, domain-relevant tags (1-3 words each) for the text below. "
+                f"Return only a comma-separated list of up to {k} tags, no extra text.\n\n"
+                "TEXT:\n" + "\n\n".join(chunks)
+            )
+            out = self.impl.generate(model=model, messages=[
+                {"role": "system", "content": "You output only tags as comma-separated text."},
+                {"role": "user", "content": prompt}
+            ])
+            if not isinstance(out, str):  # be defensive
+                return []
+            raw = out.strip().strip(",")
+            tags = [t.strip() for t in raw.split(",") if t.strip()]
+            tags = [re.sub(r"\s+", " ", t) for t in tags]
+            return tags[:k]
+        except Exception:
+            return []
+    def save_last_as_example(
+        self,
+        tags: Union[str, List[str]] = None,
+        title: Optional[str] = None,
+    ) -> Optional[str]:
+        """
+        Frictionless saver: persist the last user/assistant turn as an example.
+        - tags may be a comma string or a list; both are accepted.
+        - returns the example id (e.g., 'ex_000001') or None on failure/no-op.
+        """
+        # normalize tags
+        if isinstance(tags, str):
+            tags = [t.strip() for t in tags.split(",") if t.strip()]
+        tags = tags or []
+
+        # we need a memory store and a captured last turn
+        if not (self.memory_store and self._last_user_id and self._last_output_text):
+            # nothing to save (e.g., generate() not called yet)
+            return None
+
+        try:
+            ex_id = self.memory_store.save_example(
+                user_id=self._last_user_id,
+                tags=tags,
+                input_text=self._last_user_text or "",
+                output_text=self._last_output_text or "",
+                title=title,
+            )
+            return ex_id
+        except Exception as e:
+            log.warning(f"[memory] save_last_as_example failed: {e}")
+            return None
+    # frictionless: save most recent turn as an example
+    def save_example_from_last(
+        self,
+        tags: Optional[Union[str, List[str]]] = None,
+        title: Optional[str] = None,
+        segments: Optional[List[Tuple[str, str]]] = None,
+        *,
+        auto_tag: bool = True,
+        tag_mode: str = "local",        
+        tag_k: int = 5,
+        save_to_global: bool = False,   
+        link_profiles: Optional[List[str]] = None,  
+        model_for_tags: Optional[str] = None,       
+    ) -> Optional[str]:
+        """
+        Create a compact example (input/output/title) from the last turn (or provided segments),
+        optionally auto-tag, save to user store (and global), and link to profiles.
+        Returns the example id or None.
+        """
+        if not (self.memory_store and self._last_user_id and self._last_output_text):
+            return None
+
+        uid = self._last_user_id
+        conv_id = self._last_conversation_id
+
+        # Prepare segments
+        if not segments:
+            segs = [("user", self._last_user_text or ""), ("assistant", self._last_output_text or "")]
+        else:
+            segs = segments
+
+        ex = build_example_from_segments(segs, title=title)
+
+        # Normalize tags input
+        if isinstance(tags, str):
+            tags = [t.strip() for t in tags.split(",") if t.strip()]
+        tags = tags or []
+
+        # Auto-tag if needed
+        if auto_tag and not tags:
+            chunks = [ex["title"], ex["input"], ex["output"]]
+            if tag_mode == "llm" and model_for_tags:
+                llm_tags = self._suggest_tags_llm(model_for_tags, chunks, k=tag_k)
+                if llm_tags:
+                    tags = llm_tags
+            if not tags:
+                tags = suggest_tags_local(*chunks, k=tag_k)
+
+        # Save to user store
+        try:
+            new_id = self.memory_store.save_example(uid, tags, ex["input"], ex["output"], title=ex["title"])
+            # Optionally save to global library
+            if save_to_global:
+                try:
+                    self.memory_store.save_example("__global__", tags, ex["input"], ex["output"], title=ex["title"])
+                except Exception as e:
+                    log.warning(f"[memory] save to global failed: {e}")
+            # Optionally link to named profiles
+            if link_profiles:
+                for pname in link_profiles:
+                    try:
+                        self.memory_store.link_examples_to_profile(uid, pname, [new_id], mode="append")
+                    except Exception as e:
+                        log.warning(f"[memory] link to profile '{pname}' failed: {e}")
+            return new_id
+        except Exception as e:
+            log.warning(f"[memory] save_example_from_last failed: {e}")
+            return None
+
+    @staticmethod
+    def available_models_api(provider: str, **kwargs):
+        provider = provider.lower()
+
+        if provider == "anthropic":
+            instance = AnthropicProvider(**kwargs)
+            models = instance.list_models()
+            log.info("\n Anthropic Models:\n")
+            for i, m in enumerate(models, 1):
+                log.info(f" {i:2d}. {m}")
+            return models
+
+        elif provider == "azure":
+            instance = AzureProvider(**kwargs)
+            return instance.list_models()
+
+        elif provider == "openai":
+            instance = OpenAIProvider(**kwargs)
+            models = instance.list_models()
+            groups = defaultdict(list)
+            for m in models:
+                if m.startswith(("gpt-3.5", "gpt-4", "gpt-5", "o1", "o3", "o4")):
+                    groups["LLMs"].append(m)
+                elif "dall-e" in m or "image" in m:
+                    groups["Image Models"].append(m)
+                elif "tts" in m or "audio" in m or "whisper" in m:
+                    groups["Audio Models"].append(m)
+                elif "embedding" in m:
+                    groups["Embedding Models"].append(m)
+                else:
+                    groups["Other"].append(m)
+
+            log.info("\n OpenAI Models (by category):\n")
+            for category, items in groups.items():
+                log.info(f" {category}:")
+                for i, model in enumerate(items, 1):
+                    log.info(f"   {i:2d}. {model}")
+            return models
+
+        elif provider == "ollama":
+            instance = OllamaProvider(**kwargs)
+            return instance.list_models()
+
+        elif provider == "groq":
+            instance = GroqProvider(**kwargs)
+            models = instance.list_models()
+            log.info("\n Groq Models:\n")
+            for i, m in enumerate(models, 1):
+                log.info(f"   {i:2d}. {m}")
+            return models
+
+        elif provider == "bedrock":
+            instance = BedrockProvider(**kwargs)
+            models = instance.list_models() or []
+            log.info("\n Bedrock Models:\n")
+            for i, m in enumerate(models, 1):
+                log.info(f"   {i:2d}. {m['modelId']} — {m['modelName']} ({m['provider']})")
+            return models
+        elif provider == "openrouter":
+            instance = OpenRouterProvider(**kwargs)
+            models = instance.list_models() or []
+            log.info("\n OpenRouter Models:\n")
+            for i, m in enumerate(models, 1):
+                log.info(f"   {i:2d}. {m}")
+            return models
+
+        elif provider == "gemini":
+            instance = GeminiProvider(**kwargs)
+            models = instance.list_models() or []
+            log.info("\n Gemini Models:\n")
+            for i, m in enumerate(models, 1):
+                log.info(f"  {i:02d}. {m}")
+            return models
+        log.warning(f"No wrapper available for provider '{provider}'.")
+        return []
+
+class WrapperEmbed:
+    # TODO
+    def __init__(self, provider: str, **kwargs):
+        provider = provider.lower()
+        if provider == "openai":
+            self.impl = OpenAIProvider(**kwargs)
+        elif provider == "ollama":
+            self.impl = OllamaProvider(**kwargs)
+        else:
+            raise ValueError(f"Embedding provider {provider} not supported yet")
+
+
+================================================
+FILE: wrapper/utils.py
+================================================
+import os
+import sys
+from pathlib import Path
+from dotenv import load_dotenv, find_dotenv
+
+def set_key(env_file: str, key: str, value: str):
+    env_path = Path(env_file)
+    lines = []
+    if env_path.exists():
+        with env_path.open("r") as f:
+            lines = f.readlines()
+
+    key_found = False
+    for i, line in enumerate(lines):
+        if line.startswith(f"{key}="):
+            lines[i] = f"{key}={value}\n"
+            key_found = True
+            break
+
+    if not key_found:
+        lines.append(f"{key}={value}\n")
+
+    with env_path.open("w") as f:
+        f.writelines(lines)
+
+
+def get_or_request_key(env_var_name: str, prompt_message: str) -> str:
+    """Fetch key from env, prompt if missing."""
+    dotenv_path = find_dotenv()
+    if dotenv_path:
+        load_dotenv(dotenv_path)
+    else:
+        Path(".env").touch()
+        load_dotenv()
+    key = os.getenv(env_var_name)
+    if not key:
+        print(f"{env_var_name} not found in .env")
+        new_key = input(f"{prompt_message} (will be saved in .env): ").strip()
+        if not new_key:
+            print("No key provided, exiting...")
+            sys.exit(1)
+        env_file = dotenv_path or Path(".env")
+        set_key(str(env_file), env_var_name, new_key)
+        os.environ[env_var_name] = new_key
+        key = new_key
+    return key
+
+
+def get_key_silent(env_var_name: str):
+    """Return env key if exists, else None. No prompts."""
+    dotenv_path = find_dotenv()
+    if dotenv_path:
+        load_dotenv(dotenv_path)
+    return os.getenv(env_var_name)
+
+class ColorLogger:
+    COLORS = {
+        "RESET": "\033[0m",
+        "INFO": "\033[94m",     
+        "WARNING": "\033[93m",  
+        "ERROR": "\033[91m",   
+        "SUCCESS": "\033[92m", 
+        "DEBUG": "\033[95m",    
+    }
+
+    ASCII_REMINDER = """
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║  PSST! These debug logs annoying you?                         ║
+    ║  Go to your config.py and set:                                ║
+    ║                                                               ║
+    ║      SHOW_LOGS = False                                        ║
+    ║                                                               ║
+    ║  This will shut me up and make your terminal clean again      ║
+    ╚═══════════════════════════════════════════════════════════════╝
+    """
+
+    def __init__(self, enable_debug: bool):
+        self.enable_debug = enable_debug
+        self._shown_reminder = False
+
+    def _log(self, message: str, level: str):
+        if self.enable_debug:
+            color = self.COLORS.get(level.upper(), self.COLORS["RESET"])
+            print(f"{color}[{level.upper()}] {message}{self.COLORS['RESET']}")
+
+    def _show_reminder_once(self):
+        """Show the ASCII reminder only once per session"""
+        if self.enable_debug and not self._shown_reminder:
+            print(self.COLORS["WARNING"] + self.ASCII_REMINDER + self.COLORS["RESET"])
+            self._shown_reminder = True
+
+    def info(self, message: str):
+        if self.enable_debug:
+            self._log(message, "INFO")
+
+    def warning(self, message: str):
+        if self.enable_debug:
+            self._log(message, "WARNING")
+
+    def error(self, message: str):
+        if self.enable_debug:
+            self._log(message, "ERROR")
+
+    def success(self, message: str):
+        if self.enable_debug:
+            self._log(message, "SUCCESS")
+
+    def debug(self, message: str):
+        if self.enable_debug:
+            self._log(message, "DEBUG")
+            self._show_reminder_once() 
+
+
+================================================
+FILE: wrapper/examples/builder.py
+================================================
+# wrapper/examples/builder.py
+from __future__ import annotations
+import re
+from typing import List, Dict, Tuple, Optional
+from collections import Counter
+
+STOPWORDS = {
+    "a","an","the","and","or","but","if","to","of","in","for","on","with","as","by","at",
+    "is","are","was","were","be","been","being","this","that","it","its","from","into",
+    "about","over","after","before","between","within","without","via","per","not"
+}
+
+def _clean(s: str) -> str:
+    return (s or "").strip()
+
+def _auto_title(inp: str, out: str, max_words: int = 12) -> str:
+    base = _clean(inp) or _clean(out)
+    words = re.sub(r"\s+", " ", base).split()
+    return " ".join(words[:max_words]) if words else "Example"
+
+def _compress_output(s: str, budget_chars: int = 400) -> str:
+    s = _clean(s)
+    # keep at most one fenced block fragment, cap by budget
+    s = re.sub(r"```[\s\S]*?```", lambda m: m.group(0)[:budget_chars], s)
+    if len(s) <= budget_chars:
+        return s
+    return s[:budget_chars].rstrip() + " …"
+
+def _local_tags(text: str, k: int = 5) -> List[str]:
+    text = text.lower()
+    toks = [t for t in re.findall(r"[a-z0-9\-]+", text) if t and not t.isdigit()]
+    toks = [t for t in toks if t not in STOPWORDS and len(t) > 2]
+    bigrams = [" ".join([toks[i], toks[i+1]]) for i in range(len(toks)-1)]
+    counts = Counter(toks + bigrams)
+    scored = []
+    for term, c in counts.items():
+        bonus = 1.5 if "-" in term or " " in term else 1.0
+        scored.append((c * bonus, term))
+    scored.sort(reverse=True)
+    out: List[str] = []
+    for _, term in scored:
+        if term in out:
+            continue
+        out.append(term)
+        if len(out) >= k:
+            break
+    return out
+
+def suggest_tags_local(*chunks: str, k: int = 5, hints: Optional[List[str]] = None) -> List[str]:
+    text = " ".join(_clean(x) for x in chunks if x)
+    tags = _local_tags(text, k=k)
+    if hints:
+        seen = set()
+        merged: List[str] = []
+        for h in hints:
+            h = h.strip()
+            if not h or h in seen:
+                continue
+            merged.append(h); seen.add(h)
+        for t in tags:
+            if t not in seen:
+                merged.append(t); seen.add(t)
+        return merged[:k]
+    return tags
+
+def build_example_from_segments(
+    segments: List[Tuple[str, str]],
+    title: Optional[str] = None,
+    out_budget_chars: int = 400
+) -> Dict[str, str]:
+    """Return a compact {'title','input','output'} from chat segments."""
+    user_texts = [t for r, t in segments if r == "user" and _clean(t)]
+    asst_texts = [t for r, t in segments if r in ("assistant","model") and _clean(t)]
+    inp = user_texts[-1] if user_texts else (_clean(segments[-1][1]) if segments else "")
+    out = _compress_output(asst_texts[-1] if asst_texts else "", budget_chars=out_budget_chars)
+    return {"title": title or _auto_title(inp, out), "input": _clean(inp), "output": _clean(out)}
+
+
+
+================================================
+FILE: wrapper/memory/json_store.py
+================================================
+# wrapper/memory/json_store.py
+from __future__ import annotations
+import json, time, uuid
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+from .store import MemoryStore, Message
+
+MEM_DIR = Path(".memory")
+
+class JSONMemoryStore(MemoryStore):
+    def __init__(self) -> None:
+        MEM_DIR.mkdir(exist_ok=True)
+
+    # ---------- internals ----------
+    def _path(self, user_id: str) -> Path:
+        return MEM_DIR / f"{user_id}.json"
+
+    def _blank(self) -> Dict[str, Any]:
+        return {"threads": {}, "profile": {}, "profiles": {}, "examples": {}, "examples_counter": 0}
+
+    def _load(self, user_id: str) -> Dict[str, Any]:
+        p = self._path(user_id)
+        if not p.exists():
+            return self._blank()
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            backup = p.with_suffix(f".{int(time.time())}.bak")
+            try: p.rename(backup)
+            except Exception: pass
+            return self._blank()
+
+    def _save(self, user_id: str, data: Dict[str, Any]) -> None:
+        p = self._path(user_id)
+        tmp = p.with_suffix(".tmp")
+        tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        tmp.replace(p)
+    
+    # ---------- short-term ----------
+    def get_window(self, user_id: str, conversation_id: str, k: int) -> List[Message]:
+        d = self._load(user_id)
+        t = d.setdefault("threads", {}).setdefault(conversation_id, {"messages": [], "summary": ""})
+        msgs: List[Message] = t.get("messages", [])
+        return msgs[-k:] if k and k > 0 else msgs
+
+    def append_message(self, user_id: str, conversation_id: str, role: str, content: str) -> None:
+        d = self._load(user_id)
+        t = d.setdefault("threads", {}).setdefault(conversation_id, {"messages": [], "summary": ""})
+        t["messages"].append({"role": role, "content": content, "ts": int(time.time())})
+        self._save(user_id, d)
+
+    # ---------- profile (legacy default) ----------
+    def get_profile(self, user_id: str) -> Dict[str, Any]:
+        return self._load(user_id).get("profile", {}) or {}
+
+    def upsert_profile(self, user_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
+        d = self._load(user_id)
+        p = d.setdefault("profile", {})
+        for k, v in (updates or {}).items():
+            p[k] = v
+        self._save(user_id, d)
+        return p
+
+    # ---------- named profiles ----------
+    def get_profile_named(self, user_id: str, profile_name: str) -> Dict[str, Any]:
+        d = self._load(user_id)
+        return d.setdefault("profiles", {}).get(profile_name, {}) or {}
+
+    def upsert_profile_named(self, user_id: str, profile_name: str, updates: Dict[str, Any]) -> Dict[str, Any]:
+        d = self._load(user_id)
+        profs = d.setdefault("profiles", {})
+        p = profs.setdefault(profile_name, {})
+        for k, v in (updates or {}).items():
+            p[k] = v
+        # ensure fields used by wrapper exist (but keep thin)
+        p.setdefault("example_ids", [])
+        p.setdefault("example_tags", [])
+        self._save(user_id, d)
+        return p
+
+    # ---------- examples (global) ----------
+    def save_example(self, user_id: str, tags: List[str], input_text: str, output_text: str, title: Optional[str] = None) -> str:
+        d = self._load(user_id)
+        ex_store: Dict[str, Any] = d.setdefault("examples", {})
+        d["examples_counter"] = int(d.get("examples_counter", 0)) + 1
+        ex_num = d["examples_counter"]
+        ex_id = f"ex_{ex_num:06d}"  # deterministic numeric id
+        title = title or self._auto_title(input_text, output_text)
+        ex_store[ex_id] = {
+            "num": ex_num,
+            "tags": sorted({t.strip() for t in (tags or []) if t.strip()}),
+            "title": title,
+            "input": (input_text or "").strip(),
+            "output": (output_text or "").strip(),
+            "ts": int(time.time()),
+        }
+        self._save(user_id, d)
+        return ex_id
+
+    def get_examples_by_tags(self, user_id: str, tags: List[str], limit: int = 2) -> List[Dict[str, Any]]:
+        d = self._load(user_id)
+        ex_store: Dict[str, Any] = d.get("examples", {}) or {}
+        tagset = {t.strip() for t in (tags or []) if t.strip()}
+        scored = []
+        for ex_id, ex in ex_store.items():
+            overlap = len(tagset.intersection(set(ex.get("tags", []))))
+            if overlap == 0:
+                continue
+            scored.append((overlap, ex.get("ts", 0), ex_id, ex))
+        scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
+        return [{"id": ex_id, **ex} for _, _, ex_id, ex in scored[: max(1, limit)]]
+
+    def get_examples_by_ids(self, user_id: str, ids: List[str]) -> List[Dict[str, Any]]:
+        if not ids: return []
+        d = self._load(user_id)
+        ex_store: Dict[str, Any] = d.get("examples", {}) or {}
+        out = []
+        for ex_id in ids:
+            ex = ex_store.get(ex_id)
+            if ex:
+                out.append({"id": ex_id, **ex})
+        return out
+
+    # ---------- profile-example linking ----------
+    def link_examples_to_profile(self, user_id: str, profile_name: str, example_ids: List[str], mode: str = "append") -> List[str]:
+        d = self._load(user_id)
+        p = d.setdefault("profiles", {}).setdefault(profile_name, {"example_ids": [], "example_tags": []})
+        current = p.get("example_ids", []) or []
+        if mode == "set":
+            p["example_ids"] = list(dict.fromkeys(example_ids))  # de-dupe, preserve order
+        else:
+            p["example_ids"] = list(dict.fromkeys(current + list(example_ids)))
+        self._save(user_id, d)
+        return p["example_ids"]
+
+    def get_examples_for_profile(self, user_id: str, profile_name: str, limit: int = 2) -> List[Dict[str, Any]]:
+        prof = self.get_profile_named(user_id, profile_name)
+        # priority: explicit example_ids, then example_tags
+        ids = prof.get("example_ids") or []
+        examples = self.get_examples_by_ids(user_id, ids)
+        if len(examples) < limit:
+            tags = prof.get("example_tags") or []
+            more = self.get_examples_by_tags(user_id, tags, limit=limit - len(examples))
+            # merge, avoiding dupes by id
+            have = {e["id"] for e in examples}
+            for e in more:
+                if e["id"] not in have:
+                    examples.append(e)
+        return examples[:limit]
+
+    # ---------- thread summary ----------
+    def get_thread_summary(self, user_id: str, conversation_id: str) -> str:
+        d = self._load(user_id)
+        t = d.setdefault("threads", {}).setdefault(conversation_id, {"messages": [], "summary": ""})
+        return t.get("summary") or ""
+
+    def set_thread_summary(self, user_id: str, conversation_id: str, summary: str) -> None:
+        d = self._load(user_id)
+        t = d.setdefault("threads", {}).setdefault(conversation_id, {"messages": [], "summary": ""})
+        t["summary"] = summary or ""
+        self._save(user_id, d)
+
+    def get_thread_length(self, user_id: str, conversation_id: str) -> int:
+        d = self._load(user_id)
+        t = d.setdefault("threads", {}).setdefault(conversation_id, {"messages": [], "summary": ""})
+        return len(t.get("messages", []))
+
+    # ---------- helpers ----------
+    @staticmethod
+    def _auto_title(inp: str, out: str, max_words: int = 12) -> str:
+        text = (inp or "").strip() or (out or "").strip()
+        words = text.replace("\n", " ").split()
+        return " ".join(words[:max_words]) if words else "Example"
+
+
+
+================================================
+FILE: wrapper/memory/store.py
+================================================
+# wrapper/memory/store.py
+from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Optional, TypedDict
+
+
+class Message(TypedDict, total=False):
+    """
+    Minimal chat turn representation used by the memory layer.
+
+    Fields
+    ------
+    role : Literal["user","assistant","system"]
+        Who authored the message.
+    content : str
+        The text content of the message.
+    ts : int
+        UNIX epoch seconds (set by the store when appending).
+    """
+    role: str
+    content: str
+    ts: int
+
+
+class ExampleRecord(TypedDict, total=False):
+    """
+    A compact, reusable few-shot example.
+
+    Fields
+    ------
+    id : str
+        Unique example identifier (store-assigned).
+    tags : List[str]
+        Tags for retrieval and organization.
+    title : str
+        ≤ ~12 word one-line intro generated or provided by user.
+    input : str
+        The user-side text that produced the example.
+    output : str
+        The assistant-side text saved as the example.
+    ts : int
+        UNIX epoch seconds (store-assigned).
+    """
+    id: str
+    tags: List[str]
+    title: str
+    input: str
+    output: str
+    ts: int
+
+
+class MemoryStore(ABC):
+    """
+    Thin, pluggable memory interface.
+
+    Implementations:
+      - JSONMemoryStore (local, zero-deps)
+      - SQLiteMemoryStore (optional; same methods)
+
+    Concepts:
+      * Short-term window: rolling K turns per (user_id, conversation_id)
+      * Profiles:
+          - Legacy default profile: one dict per user
+          - Named profiles: many dicts per user, referenced by profile_name
+      * Examples:
+          - Stored once globally per user, linkable to profiles
+          - Fetch by tags or by ids
+      * Thread summary:
+          - Rolling summary string per (user_id, conversation_id)
+    """
+
+    # ---- short-term window ----
+    @abstractmethod
+    def get_window(self, user_id: str, conversation_id: str, k: int) -> List[Message]:
+        """
+        Return the last K messages (user/assistant/system) for a thread.
+        Implementations should return [] if no data exists.
+        """
+
+    @abstractmethod
+    def append_message(self, user_id: str, conversation_id: str, role: str, content: str) -> None:
+        """
+        Append a message to a thread. Store should set `ts` internally.
+        """
+
+    # ---- long-term profile (legacy default) ----
+    @abstractmethod
+    def get_profile(self, user_id: str) -> Dict[str, Any]:
+        """
+        Return the legacy default (unnamed) profile dict for the user, or {}.
+        """
+
+    @abstractmethod
+    def upsert_profile(self, user_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Shallow-merge `updates` into the legacy default profile and return it.
+        """
+
+    # ---- named profiles ----
+    @abstractmethod
+    def get_profile_named(self, user_id: str, profile_name: str) -> Dict[str, Any]:
+        """
+        Return a named profile dict (e.g., 'sre_engineer'), or {} if missing.
+        """
+
+    @abstractmethod
+    def upsert_profile_named(self, user_id: str, profile_name: str, updates: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Shallow-merge `updates` into a named profile and return it.
+        Implementations should ensure the profile object exists after upsert.
+        """
+
+    # ---- tagged examples (global to the user) ----
+    @abstractmethod
+    def save_example(
+        self,
+        user_id: str,
+        tags: List[str],
+        input_text: str,
+        output_text: str,
+        title: Optional[str] = None,
+    ) -> str:
+        """
+        Save a new example and return its id. Store should:
+          - assign `id`
+          - set `ts`
+          - normalize/unique tags (trim, lower if desired)
+          - generate a short `title` if not provided
+        """
+
+    @abstractmethod
+    def get_examples_by_tags(self, user_id: str, tags: List[str], limit: int = 2) -> List[ExampleRecord]:
+        """
+        Retrieve up to `limit` examples by tag overlap (tie-break by recency).
+        Return [] if none found.
+        """
+
+    @abstractmethod
+    def get_examples_by_ids(self, user_id: str, ids: List[str]) -> List[ExampleRecord]:
+        """
+        Retrieve examples by explicit ids. Missing ids are ignored.
+        """
+
+    # ---- profile-example linking (share examples across profiles) ----
+    @abstractmethod
+    def link_examples_to_profile(
+        self,
+        user_id: str,
+        profile_name: str,
+        example_ids: List[str],
+        mode: str = "append",
+    ) -> List[str]:
+        """
+        Link example ids to a named profile.
+
+        Parameters
+        ----------
+        mode : "append" | "set"
+            - "append": add (de-dupe) to existing profile links
+            - "set": replace the profile's example id list entirely
+
+        Returns
+        -------
+        List[str]
+            The resulting list of example ids linked to the profile.
+        """
+
+    @abstractmethod
+    def get_examples_for_profile(self, user_id: str, profile_name: str, limit: int = 2) -> List[ExampleRecord]:
+        """
+        Retrieve up to `limit` examples for a named profile.
+        Implementations should prioritize:
+          1) explicitly linked example_ids
+          2) profile.example_tags (if present)
+        """
+
+    # ---- thread summary (for auto-summarize-after-N) ----
+    @abstractmethod
+    def get_thread_summary(self, user_id: str, conversation_id: str) -> str:
+        """
+        Return the stored rolling summary for the thread, or "".
+        """
+
+    @abstractmethod
+    def set_thread_summary(self, user_id: str, conversation_id: str, summary: str) -> None:
+        """
+        Set/replace the rolling summary string for the thread.
+        """
+
+    @abstractmethod
+    def get_thread_length(self, user_id: str, conversation_id: str) -> int:
+        """
+        Return the number of messages currently stored for the thread.
+        """
+
+
+
+================================================
+FILE: wrapper/prompt/formatter.py
+================================================
+# wrapper/prompt/formatter.py
+from __future__ import annotations
+from typing import Any, Dict, List
+
+def _esc(text: str) -> str:
+    # Simple XML escaping to prevent broken tags
+    return (
+        (text or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+    )
+
+def build_riceco_xml(
+    *,
+    role: str | None = None,
+    instruction: str | None = None,
+    context: str | List[str] | None = None,
+    constraints: Dict[str, str] | None = None,
+    output_format: str | None = None,
+    user_text: str | None = None,
+    profile: Dict[str, Any] | None = None,
+    examples: List[Dict[str, Any]] | None = None,
+    example_ref_tags: List[str] | None = None,
+) -> str:
+    """Single root <CHAT> with thin RICECO tags. Omit empty nodes."""
+    parts: List[str] = ["<CHAT>"]
+
+    if role:
+        parts.append(f"  <ROLE>{_esc(role)}</ROLE>")
+    if instruction:
+        parts.append(f"  <INSTRUCTION>{_esc(instruction)}</INSTRUCTION>")
+
+    if profile:
+        import json
+        parts.append(f"  <PROFILE>{json.dumps(profile, ensure_ascii=False)}</PROFILE>")
+
+    if context:
+        if isinstance(context, list):
+            ctx = " ".join(str(c) for c in context if c)
+        else:
+            ctx = str(context)
+        if ctx.strip():
+            parts.append(f"  <CONTEXT>{_esc(ctx.strip())}</CONTEXT>")
+
+    if examples:
+        ref_attr = ""
+        if example_ref_tags:
+            ref_attr = f' ref="{_esc(",".join(example_ref_tags))}"'
+        parts.append(f"  <EXAMPLES{ref_attr}>")
+        for ex in examples:
+            parts.append("    <EXAMPLE>")
+            title = ex.get("title") or ""
+            if title:
+                parts.append(f"      <TITLE>{_esc(title)}</TITLE>")
+            inp = ex.get("input") or ""
+            out = ex.get("output") or ""
+            if inp:
+                parts.append(f"      <INPUT>{_esc(inp)}</INPUT>")
+            if out:
+                parts.append(f"      <OUTPUT>{_esc(out)}</OUTPUT>")
+            parts.append("    </EXAMPLE>")
+        parts.append("  </EXAMPLES>")
+
+    if constraints:
+        parts.append("  <CONSTRAINTS>")
+        for k, v in constraints.items():
+            tag = k.strip().upper().replace(" ", "_")
+            parts.append(f"    <{tag}>{_esc(str(v))}</{tag}>")
+        parts.append("  </CONSTRAINTS>")
+
+    if output_format:
+        parts.append(f"  <OUTPUT_FORMAT>{_esc(output_format)}</OUTPUT_FORMAT>")
+
+    if user_text:
+        parts.append(f"  <USER>{_esc(user_text)}</USER>")
+
+    parts.append("</CHAT>")
+    return "\n".join(parts)
+
+
+
+================================================
+FILE: wrapper/providers/anthropic_provider.py
+================================================
+import sys
+import re
+import requests
+from anthropic import Anthropic, AuthenticationError, APITimeoutError, APIError
+from wrapper.base import BaseLLM
+from wrapper.utils import get_or_request_key, ColorLogger
+from wrapper.config import *
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class AnthropicProvider(BaseLLM):
+    def __init__(self):
+        # Auto fetch API key from env or ask user
+        self.api_key = get_or_request_key("ANTHROPIC_API_KEY", "Please enter your Anthropic API Key")
+        self.client = Anthropic(api_key=self.api_key, timeout=30.0)  # Added timeout
+        self.default_system_prompt = "You are a helpful AI assistant."
+        self.base_url = "https://api.anthropic.com/v1"
+
+    def _sanitize_input(self, text: str) -> str:
+        """Sanitize user input to prevent potential issues"""
+        if not isinstance(text, str):
+            return str(text)
+        # Remove potentially harmful characters while preserving functionality
+        sanitized = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]', '', text)
+        return sanitized.strip()
+
+    def _validate_messages(self, messages: list) -> bool:
+        """Validate message structure"""
+        if not isinstance(messages, list):
+            return False
+        for msg in messages:
+            if not isinstance(msg, dict) or 'role' not in msg or 'content' not in msg:
+                return False
+            if msg['role'] not in ['system', 'user', 'assistant']:
+                return False
+        return True
+
+    def generate(
+        self, 
+        model: str,
+        prompt: str = None,
+        messages: list[dict] = None,
+        temperature: float = 0.7, 
+        max_tokens: int = 1024, 
+        top_p: float = 0.1, 
+        stream: bool = False, 
+        **kwargs
+    ) -> str:
+        if not model or not isinstance(model, str):
+            raise ValueError("Model name must be a non-empty string")
+
+        if prompt:
+            prompt = self._sanitize_input(prompt)
+
+        if messages:
+            if not self._validate_messages(messages):
+                raise ValueError("Invalid message format")
+            final_messages = []
+            for msg in messages:
+                sanitized_msg = {
+                    'role': msg['role'],
+                    'content': self._sanitize_input(msg['content'])
+                }
+                final_messages.append(sanitized_msg)
+        else:
+            system_default = {"role": "system", "content": self.default_system_prompt}
+            user_msg = {"role": "user", "content": prompt or "Hello"}
+            final_messages = [system_default, user_msg]
+
+        system_content = ""
+        user_messages = []
+
+        for msg in final_messages:
+            if msg["role"] == "system":
+                system_content = msg["content"]
+            else:
+                user_messages.append(msg)
+        try:
+            if not stream:
+                response = self.client.messages.create(
+                    model=model,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    top_p=top_p,
+                    system=system_content or self.default_system_prompt,
+                    messages=user_messages,
+                    **kwargs
+                )
+                return response.content[0].text.strip()
+            else:
+                output = []
+                with self.client.messages.stream(
+                    model=model,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    top_p=top_p,
+                    system=system_content or self.default_system_prompt,
+                    messages=user_messages,
+                    **kwargs
+                ) as stream_resp:
+                    for event in stream_resp:
+                        if hasattr(event, "type") and event.type == "content_block_delta":
+                            delta_content = getattr(event, "delta", {}).get("text", "")
+                            if delta_content:
+                                sys.stdout.write(delta_content)
+                                sys.stdout.flush()
+                                output.append(delta_content)
+                return "".join(output).strip()
+        except AuthenticationError as e:
+            log.error(f"Authentication failed: {str(e)}")
+            raise RuntimeError("Invalid API key. Please check .env file.")
+        except APITimeoutError as e:
+            log.error(f"API request timed out: {str(e)}")
+            raise RuntimeError("Request timed out. Please try again.")
+        except APIError as e:
+            log.error(f"Anthropic API error: {str(e)}")
+            raise RuntimeError(f"API error: {str(e)}")
+        except Exception as e:
+            log.error(f"Unexpected error: {str(e)}")
+            raise RuntimeError(f"Unexpected error occurred: {str(e)}")
+
+    def list_models(self, **kwargs) -> list[str]:
+        """Dynamically fetch available models from Anthropic API"""
+        url = f"{self.base_url}/models"
+        headers = {
+            "x-api-key": self.api_key,
+            "anthropic-version": "2023-06-01",
+            "Content-Type": "application/json"
+        }
+
+        try:
+            response = requests.get(url, headers=headers, timeout=30)
+            response.raise_for_status()
+            models_data = response.json().get("data", [])
+
+            if models_data:
+                model_ids = [model.get("id", "") for model in models_data if model.get("id")]
+
+                if SHOW_LOGS:
+                    log.info("\nAvailable Anthropic models:")
+                    for idx, model in enumerate(models_data, start=1):
+                        model_id = model.get("id", "unknown")
+                        display_name = model.get("display_name", model_id)
+                        created_at = model.get("created_at", "unknown")
+                        log.info(f"  {idx:02d}. {display_name} | ID: {model_id} | Created: {created_at}")
+
+                return model_ids
+            else:
+                log.warning("No models found from API!")
+
+        except requests.RequestException as e:
+            log.error(f"Failed to retrieve models from API: {e}")
+
+
+
+================================================
+FILE: wrapper/providers/azure_provider.py
+================================================
+import sys
+import re
+import requests
+from openai import AzureOpenAI, AuthenticationError, APITimeoutError, APIError
+from wrapper.base import BaseLLM
+from wrapper.utils import get_or_request_key, ColorLogger
+from wrapper.config import *
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class AzureProvider(BaseLLM):
+    def __init__(self):
+        # Auto fetch API keys and endpoint from env or ask user
+        self.api_key = get_or_request_key("AZURE_OPENAI_API_KEY", "Please enter your Azure OpenAI API Key")
+        self.endpoint = get_or_request_key("AZURE_OPENAI_ENDPOINT", "Please enter your Azure OpenAI Endpoint (e.g., https://your-resource.openai.azure.com)")
+        self.api_version = get_or_request_key("AZURE_OPENAI_API_VERSION", "Please enter Azure OpenAI API Version (e.g., 2024-10-21)")
+
+        # Clean endpoint URL
+        if not self.endpoint.startswith(('http://', 'https://')):
+            self.endpoint = f"https://{self.endpoint}"
+        self.endpoint = self.endpoint.rstrip('/')
+
+        self.client = AzureOpenAI(
+            api_key=self.api_key,
+            azure_endpoint=self.endpoint,
+            api_version=self.api_version,
+            timeout=30.0
+        )
+        self.default_system_prompt = "You are a helpful AI assistant."
+
+    def _sanitize_input(self, text: str) -> str:
+        """Sanitize user input to prevent potential issues"""
+        if not isinstance(text, str):
+            return str(text)
+        # Remove potentially harmful characters while preserving functionality
+        sanitized = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]', '', text)
+        return sanitized.strip()
+
+    def _validate_messages(self, messages: list) -> bool:
+        """Validate message structure"""
+        if not isinstance(messages, list):
+            return False
+        for msg in messages:
+            if not isinstance(msg, dict) or 'role' not in msg or 'content' not in msg:
+                return False
+            if msg['role'] not in ['system', 'user', 'assistant']:
+                return False
+        return True
+
+    def generate(
+        self, 
+        model: str,
+        prompt: str = None,
+        messages: list[dict] = None,
+        temperature: float = 0.7, 
+        max_tokens: int = 1024, 
+        top_p: float = 0.1, 
+        stream: bool = False, 
+        **kwargs
+    ) -> str:
+        if not model or not isinstance(model, str):
+            raise ValueError("Model name must be a non-empty string")
+
+        if prompt:
+            prompt = self._sanitize_input(prompt)
+
+        if messages:
+            if not self._validate_messages(messages):
+                raise ValueError("Invalid message format")
+            final_messages = []
+            for msg in messages:
+                sanitized_msg = {
+                    'role': msg['role'],
+                    'content': self._sanitize_input(msg['content'])
+                }
+                final_messages.append(sanitized_msg)
+        else:
+            system_default = {"role": "system", "content": self.default_system_prompt}
+            user_msg = {"role": "user", "content": prompt or "Hello"}
+            final_messages = [system_default, user_msg]
+
+        try:
+            if not stream:
+                response = self.client.chat.completions.create(
+                    model=model,
+                    messages=final_messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    top_p=top_p,
+                    **kwargs
+                )
+                return response.choices[0].message.content.strip()
+            else:
+                output = []
+                stream_response = self.client.chat.completions.create(
+                    model=model,
+                    messages=final_messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    top_p=top_p,
+                    stream=True,
+                    **kwargs
+                )
+                for chunk in stream_response:
+                    if chunk.choices[0].delta.content is not None:
+                        content = chunk.choices[0].delta.content
+                        sys.stdout.write(content)
+                        sys.stdout.flush()
+                        output.append(content)
+                return "".join(output).strip()
+
+        except AuthenticationError as e:
+            log.error(f"Authentication failed: {str(e)}")
+            raise RuntimeError("Invalid API key or endpoint. Please check .env file.")
+        except APITimeoutError as e:
+            log.error(f"API request timed out: {str(e)}")
+            raise RuntimeError("Request timed out. Please try again.")
+        except APIError as e:
+            log.error(f"Azure OpenAI API error: {str(e)}")
+            raise RuntimeError(f"API error: {str(e)}")
+        except Exception as e:
+            log.error(f"Unexpected error: {str(e)}")
+            raise RuntimeError(f"Unexpected error occurred: {str(e)}")
+
+    def list_models(self, **kwargs) -> list[str]:
+        """Dynamically fetch available models from Azure OpenAI API"""
+        url = f"{self.endpoint}/openai/models"
+        headers = {
+            "api-key": self.api_key,
+            "Content-Type": "application/json"
+        }
+        params = {
+            "api-version": self.api_version
+        }
+
+        try:
+            response = requests.get(url, headers=headers, params=params, timeout=30)
+            response.raise_for_status()
+            models_data = response.json().get("data", [])
+
+            if models_data:
+                model_ids = []
+
+                if SHOW_LOGS:
+                    log.info("\nAvailable Azure OpenAI models:")
+
+                for idx, model in enumerate(models_data, start=1):
+                    model_id = model.get("id", "unknown")
+                    model_ids.append(model_id)
+
+                    if SHOW_LOGS:
+                        status = model.get("status", "unknown")
+                        capabilities = model.get("capabilities", {})
+                        chat_completion = capabilities.get("chat_completion", False)
+                        completion = capabilities.get("completion", False)
+                        embeddings = capabilities.get("embeddings", False)
+
+                        cap_str = []
+                        if chat_completion:
+                            cap_str.append("Chat")
+                        if completion:
+                            cap_str.append("Completion")
+                        if embeddings:
+                            cap_str.append("Embeddings")
+
+                        log.info(f"  {idx:02d}. {model_id} | Status: {status} | Capabilities: {', '.join(cap_str) or 'None'}")
+
+                return model_ids
+            else:
+                log.warning("No models found from API!")
+
+        except requests.RequestException as e:
+            log.error(f"Failed to retrieve models from API: {e}")
+
+
+
+================================================
+FILE: wrapper/providers/bedrock_provider.py
+================================================
+import json
+import sys
+import os
+import boto3
+from botocore.exceptions import ClientError
+from wrapper.utils import ColorLogger, load_dotenv
+from wrapper.base import BaseLLM
+from wrapper.config import SHOW_LOGS
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+load_dotenv()
+
+class BedrockProvider(BaseLLM):
+    def __init__(self):
+        """
+        Initialize BedrockProvider using environment variables only.
+        No interactive prompting. Safe for builds, Uvicorn, and CI/CD.
+        """
+        self.region = os.environ.get("AWS_REGION")
+        self.aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
+        self.aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+        self.aws_session_token = os.environ.get("AWS_SESSION_TOKEN")
+
+        self.client = boto3.client(
+            "bedrock-runtime",
+            region_name=self.region,
+            aws_access_key_id=self.aws_access_key_id,
+            aws_secret_access_key=self.aws_secret_access_key,
+            aws_session_token=self.aws_session_token,
+        )
+
+        self.bedrock_client = boto3.client(
+            "bedrock",
+            region_name=self.region,
+            aws_access_key_id=self.aws_access_key_id,
+            aws_secret_access_key=self.aws_secret_access_key,
+            aws_session_token=self.aws_session_token,
+        )
+
+    def generate(
+        self,
+        model: str,
+        prompt: str = None,
+        messages: list[dict] = None,
+        temperature: float = 0.7,
+        max_tokens: int = 200,
+        top_p: float = 0.9,
+        stream: bool = False,
+        **kwargs
+    ) -> str:
+        """
+        Generate a response from Bedrock model.
+        Supports both prompt-based and messages-based inputs.
+        """
+        system_prompt = None
+        final_messages = []
+
+        if messages:
+            for m in messages:
+                if m["role"] == "system":
+                    system_prompt = m["content"]
+                else:
+                    final_messages.append(m)
+        else:
+            system_prompt = "You are a helpful AI assistant."
+            final_messages = [{"role": "user", "content": prompt}]
+
+        body_dict = {
+            "messages": final_messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "top_p": top_p,
+            "anthropic_version": "bedrock-2023-05-31",
+            **kwargs
+        }
+
+        if system_prompt:
+            body_dict["system"] = system_prompt
+
+        body = json.dumps(body_dict)
+
+        if not stream:
+            resp = self.client.invoke_model(
+                modelId=model,
+                body=body,
+                accept="application/json",
+                contentType="application/json"
+            )
+            response_body = json.loads(resp["body"].read().decode("utf-8"))
+            return response_body["content"][0]["text"].strip()
+        else:
+            output = []
+            stream_resp = self.client.invoke_model_with_response_stream(
+                modelId=model,
+                body=body,
+                accept="application/json",
+                contentType="application/json"
+            )
+            for event in stream_resp["body"]:
+                chunk = json.loads(event["chunk"]["bytes"].decode("utf-8"))
+                if chunk.get("type") == "content_block_delta":
+                    delta = chunk["delta"]["text"]
+                    sys.stdout.write(delta)
+                    sys.stdout.flush()
+                    output.append(delta)
+            return "".join(output).strip()
+
+    def list_models(self, by_provider: str = None, by_output_modality: str = None, **kwargs):
+        """
+        List all Bedrock foundation models.
+        Optional filtering by provider or output modality.
+        """
+        try:
+            params = {}
+            if by_provider:
+                params["byProvider"] = by_provider
+            if by_output_modality:
+                params["byOutputModality"] = by_output_modality
+
+            resp = self.bedrock_client.list_foundation_models(**params)
+            summaries = resp.get("modelSummaries", [])
+            models = []
+            for m in summaries:
+                models.append({
+                    "modelId": m.get("modelId"),
+                    "modelName": m.get("modelName"),
+                    "provider": m.get("providerName"),
+                    "outputModalities": m.get("outputModalities", []),
+                    "inputModalities": m.get("inputModalities", []),
+                    "responseStreamingSupported": m.get("responseStreamingSupported", False),
+                })
+            return models
+        except ClientError as e:
+            log.error(f"Bedrock: failed to list foundation models: {e}")
+            return []
+
+
+
+================================================
+FILE: wrapper/providers/gemini_provider.py
+================================================
+# wrapper/providers/gemini_provider.py
+from typing import List, Dict, Any, Iterator, Union
+from google import genai
+from google.genai import types as gtypes
+from google.genai import errors as google_exceptions
+from wrapper.base import BaseLLM
+from wrapper.utils import get_or_request_key, ColorLogger
+from wrapper.config import *
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class GeminiProvider(BaseLLM):
+    def __init__(self):
+        self.api_key = get_or_request_key("GEMINI_API_KEY", "Please enter your Gemini API Key")
+        self.client = genai.Client(api_key=self.api_key)
+        self.default_system_prompt = "You are a helpful AI assistant."
+
+    def generate(
+        self,
+        model: str,
+        prompt: str = None,
+        messages: List[Dict[str, Any]] = None,
+        stream: bool = False,
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        top_p: float = 0.9,
+        **kwargs
+    ) -> Union[str, Iterator[str]]:
+        
+        source_messages = messages if messages and isinstance(messages, list) else [
+            {"role": "system", "content": self.default_system_prompt},
+            {"role": "user", "content": prompt or "Hello"},
+        ]
+
+        sys_parts = [msg.get("content", "") for msg in source_messages if msg.get("role") == "system"]
+        system_text = "\n".join(p.strip() for p in sys_parts if p).strip() or None
+        
+        contents = []
+        for msg in source_messages:
+            role = (msg.get("role") or "").lower()
+            text = str(msg.get("content") or "")
+            if role == "system":
+                continue
+            elif role in ("assistant", "model"):
+                contents.append(gtypes.Content(role="model", parts=[gtypes.Part.from_text(text=text)]))
+            else:
+                contents.append(gtypes.Content(role="user", parts=[gtypes.Part.from_text(text=text)]))
+
+        config = gtypes.GenerateContentConfig(
+            temperature=temperature,
+            top_p=top_p,
+            max_output_tokens=max_tokens,
+            system_instruction=system_text,
+            **{k: v for k, v in kwargs.items() if v is not None}
+        )
+        
+        try:
+            if stream:
+                response_stream = self.client.models.generate_content_stream(
+                    model=model,
+                    contents=contents,
+                    config=config
+                )
+                def stream_generator() -> Iterator[str]:
+                    for chunk in response_stream:
+                        if text := getattr(chunk, "text", None):
+                            yield text
+                return stream_generator()
+            
+            response = self.client.models.generate_content(
+                model=model,
+                contents=contents,
+                config=config
+            )
+            return (getattr(response, "text", "") or "").strip()
+
+        except google_exceptions.InvalidArgument as e:
+            log.error(f"[gemini] Invalid Argument (400): The request is malformed. Check parameters. Details: {e}")
+            raise RuntimeError(str(e))
+        except google_exceptions.PermissionDenied as e:
+            log.error(f"[gemini] Permission Denied (403): Check your API key and permissions. Details: {e}")
+            raise RuntimeError(str(e))
+        except google_exceptions.NotFound as e:
+            log.error(f"[gemini] Not Found (404): The requested resource (e.g., model) was not found. Details: {e}")
+            raise RuntimeError(str(e))
+        except google_exceptions.ResourceExhausted as e:
+            log.error(f"[gemini] Resource Exhausted (429): You have exceeded your rate limit. Details: {e}")
+            raise RuntimeError(str(e))
+        except (google_exceptions.InternalServerError, google_exceptions.ServiceUnavailable) as e:
+            log.error(f"[gemini] Server Error (500/503): The service is unavailable or encountered an internal error. Please retry. Details: {e}")
+            raise RuntimeError(str(e))
+        except Exception as e:
+            log.error(f"[gemini] An unexpected error occurred: {e}")
+            raise RuntimeError(str(e))
+
+    def list_models(self) -> List[str]:
+        try:
+            return [getattr(m, "name", None) or getattr(m, "model", None) for m in self.client.models.list()]
+        except (google_exceptions.PermissionDenied, google_exceptions.ResourceExhausted) as e:
+            log.error(f"[gemini] list_models API error: {e}")
+            return []
+        except Exception as e:
+            log.error(f"[gemini] list_models unexpected error: {e}")
+            return []
+
+
+================================================
+FILE: wrapper/providers/groq_provider.py
+================================================
+# wrapper/providers/groq_provider.py
+from typing import List, Dict, Any, Iterator, Union
+from wrapper.base import BaseLLM
+from wrapper.utils import get_or_request_key, ColorLogger
+from wrapper.config import *
+from groq import (
+    Groq,
+    BadRequestError,
+    AuthenticationError,
+    PermissionDeniedError,
+    NotFoundError,
+    UnprocessableEntityError,
+    RateLimitError,
+    InternalServerError,
+    APIConnectionError,
+)
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class GroqProvider(BaseLLM):
+    def __init__(self):
+        self.api_key = get_or_request_key("GROQ_API_KEY", "Please enter your Groq API Key")
+        self.client = Groq(api_key=self.api_key)
+        self.default_system_prompt = "You are a helpful AI assistant."
+
+    def generate(
+        self,
+        model: str,
+        prompt: str = None,
+        messages: List[Dict[str, Any]] = None,
+        temperature: float = 0.7,
+        max_tokens: int = 200,
+        top_p: float = 0.1,
+        stream: bool = False,
+        **kwargs
+    ) -> Union[str, Iterator[str]]:
+
+        if messages and isinstance(messages, list):
+            final_messages = messages
+        else:
+            final_messages = [
+                {"role": "system", "content": self.default_system_prompt},
+                {"role": "user", "content": prompt or "Hello"},
+            ]
+
+        api_params = {
+            "model": model,
+            "messages": final_messages,
+            "stream": stream,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "top_p": top_p,
+        }
+        api_params.update({k: v for k, v in kwargs.items() if v is not None})
+
+        try:
+            response = self.client.chat.completions.create(**api_params)
+
+            if stream:
+                def stream_generator() -> Iterator[str]:
+                    for chunk in response:
+                        content = chunk.choices[0].delta.content
+                        if content:
+                            yield content
+                return stream_generator()
+
+            return (response.choices[0].message.content or "").strip()
+
+        except (
+            AuthenticationError,
+            PermissionDeniedError,
+            NotFoundError,
+            UnprocessableEntityError,
+            RateLimitError,
+            InternalServerError,
+            APIConnectionError,
+            BadRequestError
+        ) as e:
+            log.error(f"[groq] API error: {e.__class__.__name__} - {e}")
+            raise RuntimeError(str(e))
+        except Exception as e:
+            log.error(f"[groq] Unexpected error: {e}")
+            raise RuntimeError(str(e))
+
+    def list_models(self) -> List[str]:
+        try:
+            models = self.client.models.list()
+            return [m.id for m in models.data]
+        except (APIConnectionError, RateLimitError, AuthenticationError) as e:
+            log.error(f"[groq] list_models API error: {e}")
+            return []
+        except Exception as e:
+            log.error(f"[groq] list_models unexpected error: {e}")
+            return []
+
+
+================================================
+FILE: wrapper/providers/ollama_provider.py
+================================================
+import sys
+import requests
+from wrapper.base import BaseLLM
+from wrapper.utils import set_key, get_key_silent, ColorLogger
+from pathlib import Path
+from dotenv import load_dotenv
+import json
+from wrapper.config import *
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class OllamaProvider(BaseLLM):
+    DEFAULT_PORT = 11434  # fixed port
+
+    def __init__(self):
+        # Use consistent location in user's home directory
+        env_file = Path.home() / ".wrapper" / ".env"
+        env_file.parent.mkdir(exist_ok=True)
+        
+        if env_file.exists():
+            load_dotenv(env_file)
+            log.debug(f"yooo found ur .env chillin at {env_file}")
+        else:
+            env_file.touch()
+            load_dotenv(env_file)
+            log.debug(f"no .env? bruh... made u a fresh one at {env_file}")
+
+        # Load values
+        self.api_key = (get_key_silent("OLLAMA_API_KEY") or "").strip()
+        self.base_url = (get_key_silent("OLLAMA_BASE_URL") or "").strip()
+        log.debug(f"api key status: {'secured ✓' if self.api_key else 'missing in action lmao'}")
+        log.debug(f"base url vibes: {self.base_url or 'nowhere to be found chief'}")
+        
+        # Only show menu if base_url is not already configured
+        if not self.base_url:
+            print("\nOllama Configuration (first time setup):")
+            print("1: Provide API Key (optional, for remote Ollama)")
+            print("2: Provide Endpoint Host (default: localhost:11434)")
+            print("Press Enter to use default localhost")
+            choice = input("Select option [1/2 or Enter]: ").strip()
+
+            if choice == "1":
+                new_key = input("Enter Ollama API Key: ").strip()
+                if new_key:
+                    set_key(str(env_file), "OLLAMA_API_KEY", new_key)
+                    self.api_key = new_key
+                    log.debug("api key locked n loaded")
+            elif choice == "2":
+                host = input("Enter Ollama API Endpoint Host (e.g., localhost or 192.168.1.100): ").strip()
+                if host:
+                    self.base_url = f"http://{host}:{self.DEFAULT_PORT}"
+                    set_key(str(env_file), "OLLAMA_BASE_URL", self.base_url)
+                    log.debug(f"endpoint saved: {self.base_url}")
+            
+            # Set and save default if nothing was provided
+            if not self.base_url:
+                self.base_url = f"http://localhost:{self.DEFAULT_PORT}"
+                set_key(str(env_file), "OLLAMA_BASE_URL", self.base_url)
+                log.debug("saved default localhost to .env so we dont bug u again")
+
+        # Final fallback
+        if not self.base_url:
+            self.base_url = f"http://localhost:{self.DEFAULT_PORT}"
+            log.debug(f"aight defaultin to localhost party: {self.base_url}")
+
+        log.debug("no api key but fk it we ball, might crash later idk" if not self.api_key else "we got everything, lets cook")
+
+    def list_models(self, **kwargs):
+        url = f"{self.base_url}/api/tags"   
+        headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
+
+        log.debug("lemme check what models u got installed...")
+        try:
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()
+            models_raw = response.json().get("models", [])
+
+            if models_raw:
+                log.info("\nInstalled Ollama models:")
+                for idx, m in enumerate(models_raw, start=1):
+                    name = m.get("name", "unknown")
+                    mid = m.get("model", name)
+                    size = m.get("size", "unknown")
+                    log.info(f"  {idx:02d}. {name}  |  ID: {mid}  |  Size: {size}")
+                log.debug(f"puh, found {len(models_raw)} models total")
+            else:
+                log.warning("No models found!")
+                log.info("Download one using: ollama pull <model_name>")
+                log.debug("bruh ur ollama is emptier than my brain rn")
+
+        except requests.RequestException as e:
+            log.error(f"Failed to retrieve models: {e}")
+            log.debug("model fetching went boom 💥")
+
+    def generate(self, messages: list = None, prompt: str = None, stream: bool = False, **kwargs) -> str:
+        model = kwargs.pop("model", None)
+
+        if not model:
+            log.error("ayo wheres the model name at?? cant do shit without it")
+            return ""
+
+        log.debug(f"cookin with model: {model} 👨‍🍳")
+        headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
+
+        # Handle messages vs prompt
+        if messages:
+            log.debug(f"processin {len(messages)} messages... this better be good")
+            system_msg = "\n".join(
+                m["content"] for m in messages if m.get("role") == "system"
+            )
+            user_msg = "\n".join(
+                m["content"] for m in messages if m.get("role") == "user"
+            )
+            
+            if system_msg and user_msg:
+                final_prompt = f"{system_msg}\n\n{user_msg}"
+                log.debug("got both system n user msgs, perfectenschlag")
+            elif user_msg:
+                final_prompt = user_msg
+                log.debug("just user msg, keepin it simple")
+            else:
+                final_prompt = system_msg or ""
+                log.debug("only system msg?? weird but ok")
+                
+        elif prompt:
+            log.debug("raw prompt mode activated ezpz")
+            final_prompt = prompt
+        else:
+            log.error("bruh u gave me literally nothing to work with")
+            return ""
+
+        log.debug(f"final prompt length: {len(final_prompt)} chars... sendin it")
+        payload = {"model": model, "prompt": final_prompt, "stream": False, **kwargs}
+
+        try:
+            log.debug(f"hittin up {self.base_url}/api/generate...")
+            response = requests.post(
+                f"{self.base_url}/api/generate",
+                json=payload,
+                headers=headers,
+                timeout=60
+            )
+            response.raise_for_status()
+            log.debug("puh! got 200 back, ollama didnt ghost us")
+
+            # Ollama returns newline-delimited JSON even with stream=false
+            collected = []
+            line_count = 0
+            for line in response.text.strip().split('\n'):
+                if line:
+                    line_count += 1
+                    try:
+                        data = json.loads(line)
+                        piece = data.get("response", "")
+                        if piece:
+                            collected.append(piece)
+                            if stream:
+                                print(piece, end="", flush=True)
+                    except json.JSONDecodeError as e:
+                        log.debug(f"line {line_count} was garbagio: {line[:40]}...")
+                        continue
+
+            log.debug(f"parsed {line_count} lines from response")
+            result = "".join(collected).strip()
+            
+            if result:
+                log.debug(f"dih! got {len(result)} chars back, looks solid")
+            else:
+                log.warning("ollama returned jack shit 😭")
+                log.debug("response was emptier than my will to live")
+                
+            return result
+
+        except requests.HTTPError as e:
+            log.error(f"ollama threw hands: {e.response.text if hasattr(e, 'response') else e}")
+            log.debug("http error, probably model doesnt exist or sumthin")
+            return ""
+        except requests.RequestException as e:
+            log.error(f"connection ded. is ollama even alive?? {e}")
+            log.debug("cant reach ollama, did u forget to run `ollama serve` lmaoo")
+            return ""
+        except Exception as e:
+            log.error(f"something catastrophic happened: {e}")
+            log.debug("idk what broke but it broke hard 🔥")
+            return ""
+
+
+================================================
+FILE: wrapper/providers/openai_provider.py
+================================================
+import sys
+from openai import OpenAI, AuthenticationError
+from wrapper.base import BaseLLM
+from wrapper.utils import get_or_request_key, ColorLogger
+from wrapper.config import *
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class OpenAIProvider(BaseLLM):
+    def __init__(self):
+        # auto fetch API key from env or ask user
+        self.api_key = get_or_request_key("OPENAI_API_KEY", "Please enter your OpenAI API Key")
+        self.client = OpenAI(api_key=self.api_key)
+
+    def generate(
+        self, 
+        model: str,
+        prompt: str = None,
+        messages: list[dict] = None,
+        temperature: float = 0.7, 
+        max_tokens: int = 200, 
+        top_p: float = 0.1, 
+        stream: bool = False, 
+        **kwargs
+    ) -> str:
+        # Decide between messages and prompt
+        if messages:
+            final_messages = messages
+        else:
+            # Default system + user
+            system_default = {"role": "system", "content": "You are a helpful AI assistant."}
+            user_msg = {"role": "user", "content": prompt}
+            final_messages = [system_default, user_msg]
+
+        if not stream:
+            response = self.client.chat.completions.create(
+                model=model,
+                messages=final_messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                top_p=top_p,
+                **kwargs
+            )
+            return response.choices[0].message.content.strip()
+        else:
+            output = []
+            with self.client.chat.completions.stream(
+                model=model,
+                messages=final_messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                top_p=top_p,
+                **kwargs
+            ) as stream_resp:
+                for event in stream_resp:
+                    if hasattr(event, "type") and event.type == "content.delta":
+                        delta_content = getattr(event, "delta", "")
+                        if delta_content:
+                            sys.stdout.write(delta_content)
+                            sys.stdout.flush()
+                            output.append(delta_content)
+            return "".join(output).strip()
+
+    def list_models(self) -> list[str]:
+        try:
+            models = self.client.models.list()
+            return sorted([m.id for m in models.data])
+        except AuthenticationError:
+            raise RuntimeError("Invalid API key. Please check .env file.")
+
+
+
+================================================
+FILE: wrapper/providers/openrouter_provider.py
+================================================
+# openrouter_provider.py
+from typing import List, Dict, Any, Iterator, Union, Optional
+import requests
+from openai import OpenAI, AuthenticationError, APIError, APITimeoutError, APIConnectionError, RateLimitError
+from wrapper.base import BaseLLM
+from wrapper.utils import get_or_request_key, ColorLogger
+from wrapper.config import *
+
+log = ColorLogger(enable_debug=SHOW_LOGS)
+
+class OpenRouterProvider(BaseLLM):
+    def __init__(self):
+        self.api_key = get_or_request_key("OPENROUTER_API_KEY", "Please enter your OpenRouter API Key")
+        self.client = OpenAI(api_key=self.api_key, base_url="https://openrouter.ai/api/v1")
+        self.default_system_prompt = "You are a helpful AI assistant."
+        self.base_api_url = "https://openrouter.ai/api/v1"
+
+    def generate(
+        self,
+        model: str,
+        prompt: str = None,
+        messages: List[Dict[str, Any]] = None,
+        stream: bool = False,
+        **kwargs
+    ) -> Union[str, Iterator[str]]:
+        if messages and isinstance(messages, list):
+            final_messages = messages
+        else:
+            final_messages = [
+                {"role": "system", "content": self.default_system_prompt},
+                {"role": "user", "content": prompt or "Hello"},
+            ]
+        api_params = {
+            "model": model,
+            "messages": final_messages,
+            "stream": stream,
+            **{k: v for k, v in kwargs.items() if v is not None}
+        }
+        try:
+            response = self.client.chat.completions.create(**api_params)
+            if stream:
+                def stream_generator() -> Iterator[str]:
+                    for chunk in response:
+                        content = chunk.choices[0].delta.content
+                        if content:
+                            yield content
+                return stream_generator()
+            return (response.choices[0].message.content or "").strip()
+        except (AuthenticationError, APIConnectionError, APITimeoutError, RateLimitError, APIError) as e:
+            log.error(f"[openrouter] API error: {e}")
+            raise RuntimeError(str(e))
+        except Exception as e:
+            log.error(f"[openrouter] Unexpected error: {e}")
+            raise RuntimeError(str(e))
+
+    def list_models(self) -> List[str]:
+        try:
+            r = requests.get(
+                f"{self.base_api_url}/models",
+                headers={"Authorization": f"Bearer {self.api_key}"},
+                timeout=30,
+            )
+            r.raise_for_status()
+            data = r.json()
+            return [m["id"] for m in data.get("data", []) if m.get("id")]
+        except Exception as e:
+            log.error(f"[openrouter] list_models error: {e}")
+            return []
+
+

@@ -10,3 +10,5 @@ z.py
 *_version.py
 uv.lock
 test.py
+test_e2e.py
+.memory/
